@@ -1,0 +1,66 @@
+/* Transisi smooth untuk topbar & body color jika berubah mode */
+body, .main-header, .navbar, .card, .btn {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Penyesuaian Dark Mode untuk Form, Card, dan Teks agar kontras */
+body.dark-mode .form-control {
+    background-color: #343a40;
+    color: #fff;
+    border-color: #6c757d;
+}
+
+/* Mengubah warna icon kalender (date picker) menjadi putih di dark mode */
+body.dark-mode input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    opacity: 0.8;
+}
+
+body.dark-mode .form-control:focus {
+    background-color: #495057;
+    color: #fff;
+    border-color: #80bdff;
+}
+
+body.dark-mode .text-dark {
+    color: #f8f9fa !important;
+}
+
+body.dark-mode .text-muted {
+    color: #adb5bd !important;
+}
+
+body.dark-mode .content-wrapper,
+body.dark-mode .main-footer {
+    background-color: #212529; /* Background luar tabel/card lebih gelap agar batasnya jelas */
+    color: #fff;
+}
+
+body.dark-mode .card {
+    background-color: #343a40; /* Card lebih terang sedikit sehingga seakan-akan mengambang/punya batas */
+    color: #fff;
+    border: 1px solid #4f5962; /* Batas border solid-subtle */
+}
+
+body.dark-mode .card-header {
+    border-bottom: 1px solid #4f5962;
+}
+
+body.dark-mode .table {
+    color: #fff;
+}
+
+body.dark-mode .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(255, 255, 255, 0.05); /* Belang-belang tabel dark mode */
+}
+
+body.dark-mode .table-hover tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Fix navbar FOUC (Flash of Unstyled Content) saat load halaman */
+body.dark-mode .main-header.navbar-white.navbar-light {
+    background-color: #343a40 !important;
+    color: #fff !important;
+    border-bottom-color: #4f5962 !important;
+}

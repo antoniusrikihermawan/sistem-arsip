@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\SuratMasuk;
 use App\Http\Requests\SuratMasukRequest;
+use App\Traits\FileUploadTrait;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class SuratMasukController extends Controller
 {
+    use FileUploadTrait;
     /**
      * Display a listing of the resource.
      */
@@ -19,16 +22,11 @@ class SuratMasukController extends Controller
         $end_date = $request->query('end_date');
 
         $suratMasuk = SuratMasuk::with('user')
-            ->when($search, function ($query, $search) {
-                return $query->where('nomer_surat', 'like', "%{$search}%")
-                             ->orWhere('perihal', 'like', "%{$search}%");
-            })
-            ->when($start_date && $end_date, function ($query) use ($start_date, $end_date) {
-                return $query->whereBetween('tanggal_surat', [$start_date, $end_date]);
-            })
+            ->search($search)
+            ->filterByDate($start_date, $end_date)
             ->latest('id_surat')
             ->paginate(10)
-            ->withQueryString(); // Keep search query in pagination links
+            ->withQueryString();
 
         return view('surat-masuk.index', compact('suratMasuk'));
     }
@@ -48,14 +46,32 @@ class SuratMasukController extends Controller
     {
         $data = $request->validated();
         $data['id_user'] = auth()->id();
+        
+        DB::beginTransaction();
+        $uploadedFile = null;
 
-        if ($request->hasFile('file_surat')) {
-            $data['file_surat'] = $request->file('file_surat')->store('surat', 'public');
+        try {
+            if ($request->hasFile('file_surat')) {
+                $uploadedFile = $this->handleUpload($request->file('file_surat'));
+                $data['file_surat'] = $uploadedFile;
+            }
+
+            SuratMasuk::create($data);
+            
+            DB::commit();
+            return redirect()->route('surat-masuk.index')->with('success', 'Data Surat Masuk berhasil ditambahkan.');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            
+            // Delete the file if database insertion failed
+            if ($uploadedFile) {
+                $this->deleteFile($uploadedFile);
+            }
+            
+            Log::error('Gagal menambahkan Surat Masuk: ' . $e->getMessage());
+            return redirect()->back()->withInput()->with('error', 'Terjadi kesalahan saat menyimpan data. Silakan coba lagi.');
         }
-
-        SuratMasuk::create($data);
-
-        return redirect()->route('surat-masuk.index')->with('success', 'Data Surat Masuk berhasil ditambahkan.');
     }
 
     /**
@@ -84,16 +100,37 @@ class SuratMasukController extends Controller
         $surat_masuk = SuratMasuk::findOrFail($id);
         $data = $request->validated();
 
-        if ($request->hasFile('file_surat')) {
-            if ($surat_masuk->file_surat) {
-                Storage::disk('public')->delete($surat_masuk->file_surat);
+        DB::beginTransaction();
+        $newUploadedFile = null;
+        $oldFile = $surat_masuk->file_surat;
+
+        try {
+            if ($request->hasFile('file_surat')) {
+                $newUploadedFile = $this->handleUpload($request->file('file_surat'));
+                $data['file_surat'] = $newUploadedFile;
             }
-            $data['file_surat'] = $request->file('file_surat')->store('surat', 'public');
+
+            $surat_masuk->update($data);
+            DB::commit();
+
+            // If transaction succeeds and there is a new file, delete the old one
+            if ($newUploadedFile && $oldFile) {
+                $this->deleteFile($oldFile);
+            }
+
+            return redirect()->route('surat-masuk.index')->with('success', 'Data Surat Masuk berhasil diupdate.');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            
+            // Clean up the new file if transaction fails
+            if ($newUploadedFile) {
+                $this->deleteFile($newUploadedFile);
+            }
+            
+            Log::error('Gagal mengupdate Surat Masuk: ' . $e->getMessage());
+            return redirect()->back()->withInput()->with('error', 'Terjadi kesalahan saat mengupdate data. Silakan coba lagi.');
         }
-
-        $surat_masuk->update($data);
-
-        return redirect()->route('surat-masuk.index')->with('success', 'Data Surat Masuk berhasil diupdate.');
     }
 
     /**
@@ -102,13 +139,25 @@ class SuratMasukController extends Controller
     public function destroy(string $id)
     {
         $surat_masuk = SuratMasuk::findOrFail($id);
+        $fileToDelete = $surat_masuk->file_surat;
         
-        if ($surat_masuk->file_surat) {
-            Storage::disk('public')->delete($surat_masuk->file_surat);
-        }
+        DB::beginTransaction();
         
-        $surat_masuk->delete();
+        try {
+            $surat_masuk->delete();
+            DB::commit();
+            
+            // Only delete the file physically after successful database deletion
+            if ($fileToDelete) {
+                $this->deleteFile($fileToDelete);
+            }
 
-        return redirect()->route('surat-masuk.index')->with('success', 'Data Surat Masuk berhasil dihapus.');
+            return redirect()->route('surat-masuk.index')->with('success', 'Data Surat Masuk berhasil dihapus.');
+            
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Gagal menghapus Surat Masuk: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus data.');
+        }
     }
 }

@@ -40,7 +40,6 @@ class DashboardController extends Controller
             $chartData['keluar'][] = $suratKeluarPerBulan[$i] ?? 0;
         }
 
-        // Calendar Events - Aggregated by Date
         $events = [];
         
         // Group Surat Masuk by Date
@@ -52,7 +51,7 @@ class DashboardController extends Controller
             $events[] = [
                 'title' => 'Surat Masuk : ' . $sm->total,
                 'start' => $sm->date,
-                'backgroundColor' => '#28a745', // success (green)
+                'backgroundColor' => '#28a745',
                 'borderColor' => '#28a745',
             ];
         }
@@ -66,9 +65,9 @@ class DashboardController extends Controller
             $events[] = [
                 'title' => 'Surat Keluar : ' . $sk->total,
                 'start' => $sk->date,
-                'backgroundColor' => '#ffc107', // warning (yellow)
+                'backgroundColor' => '#ffc107', 
                 'borderColor' => '#ffc107',
-                'textColor' => '#000', // ensure text is readable on yellow
+                'textColor' => '#000', 
             ];
         }
 
