@@ -7,7 +7,7 @@
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
-        <!-- Nama -->
+        <!-- Name -->
         <div class="mb-3">
             <label for="name" class="form-label">Nama Lengkap</label>
             <input id="name" type="text"
