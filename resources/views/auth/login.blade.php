@@ -57,10 +57,5 @@
             <i class="fas fa-sign-in-alt me-1"></i> Masuk
         </button>
 
-        @if (Route::has('register'))
-        <p class="text-center text-muted small mb-0">
-            Belum punya akun? <a href="{{ route('register') }}" class="auth-footer-link">Daftar di sini</a>
-        </p>
-        @endif
     </form>
 </x-guest-layout>

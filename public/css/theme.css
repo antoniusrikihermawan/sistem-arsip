@@ -1,3 +1,8 @@
+/* Global Font Override — Poppins menggantikan Source Sans Pro bawaan AdminLTE */
+body, .wrapper, .content-wrapper, .main-sidebar, .main-header, .main-footer {
+    font-family: 'Poppins', sans-serif !important;
+}
+
 /* Transisi smooth untuk topbar & body color jika berubah mode */
 body, .main-header, .navbar, .card, .btn {
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
