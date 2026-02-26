@@ -2,36 +2,29 @@
 
 namespace App\Traits;
 
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 trait FileUploadTrait
 {
     /**
-     * Upload a file and return its path.
-     *
-     * @param \Illuminate\Http\UploadedFile 
-     * @param string 
-     * @param string 
-     * @return string
+     * Upload a file and return its storage path.
      */
-    public function handleUpload($file, $path = 'surat', $disk = 'public')
+    public function handleUpload(UploadedFile $file, string $path = 'surat', string $disk = 'public'): ?string
     {
-        if ($file) {
-            return $file->store($path, $disk);
-        }
-        return null;
+        return $file->store($path, $disk);
     }
 
     /**
      * Delete a file from storage.
-     *
-     * @param string 
-     * @param string 
-     * @return void
      */
-    public function deleteFile($filePath, $disk = 'public')
+    public function deleteFile(?string $filePath, string $disk = 'public'): void
     {
-        if ($filePath && Storage::disk($disk)->exists($filePath)) {
+        if (! $filePath) {
+            return;
+        }
+
+        if (Storage::disk($disk)->exists($filePath)) {
             Storage::disk($disk)->delete($filePath);
         }
     }

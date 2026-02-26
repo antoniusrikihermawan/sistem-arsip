@@ -40,24 +40,22 @@
 
 @section('styles')
 <style>
-    /* FullCalendar Text Wrap Override & Sizing */
     .fc-event-title, .fc-event-main {
-        white-space: normal !important; /* Allow text to wrap */
+        white-space: normal !important; 
         text-overflow: clip !important;
         overflow: visible !important;
-        word-wrap: break-word; /* Ensure deep words break */
-        padding: 1px 2px !important; /* Smaller padding */
-        line-height: 1.1 !important; /* Tighter line height */
-        font-size: 0.75rem !important; /* Smaller text */
+        word-wrap: break-word; 
+        padding: 1px 2px !important; 
+        line-height: 1.1 !important;
+        font-size: 0.75rem !important; 
     }
     
     .fc-event {
         cursor: pointer;
-        margin-bottom: 2px !important; /* Reduce space between events */
+        margin-bottom: 2px !important; 
         border-radius: 3px !important;
     }
 
-    /* Reduce spacing inside day cells */
     .fc .fc-daygrid-day-top {
         padding-bottom: 2px !important;
     }
@@ -109,7 +107,7 @@
                     <tr>
                         <td>{{ $surat->nomer_surat }}</td>
                         <td>{{ $surat->pengirim }}</td>
-                        <td>{{ \Carbon\Carbon::parse($surat->tanggal_surat)->format('d M Y') }}</td>
+                        <td>{{ $surat->tanggal_surat->format('d M Y') }}</td>
                     </tr>
                     @empty
                     <tr>
@@ -141,7 +139,7 @@
                     <tr>
                         <td>{{ $surat->nomer_surat }}</td>
                         <td>{{ $surat->ditujukan }}</td>
-                        <td>{{ \Carbon\Carbon::parse($surat->tanggal_surat)->format('d M Y') }}</td>
+                        <td>{{ $surat->tanggal_surat->format('d M Y') }}</td>
                     </tr>
                     @empty
                     <tr>
@@ -162,7 +160,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         // Chart Data
         const ctx = document.getElementById('suratChart').getContext('2d');
-        const chartData = {!! json_encode($chartData ?? ['masuk' => [], 'keluar' => []]) !!};
+        const chartData = @json($chartData ?? ['masuk' => [], 'keluar' => []]);
         
         new Chart(ctx, {
             type: 'bar',
@@ -199,7 +197,7 @@
 
         // Calendar Data
         var calendarEl = document.getElementById('calendar');
-        var events = {!! json_encode($events ?? []) !!};
+        var events = @json($events ?? []);
         
         var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',

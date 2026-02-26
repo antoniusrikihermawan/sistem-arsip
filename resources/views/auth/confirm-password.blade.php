@@ -1,27 +1,31 @@
 <x-guest-layout>
-    <div class="mb-4 text-center">
-        <h3 class="fw-bold mb-1">{{ __('Area Aman') }}</h3>
-        <p class="text-muted small">
-            {{ __('Ini adalah area aman dari aplikasi. Silakan konfirmasi kata sandi Anda sebelum melanjutkan.') }}
-        </p>
-    </div>
+    @section('page-title', 'Konfirmasi Kata Sandi')
+
+    <h4 class="auth-heading">Area Aman</h4>
+    <p class="auth-subheading">Konfirmasi kata sandi Anda sebelum melanjutkan.</p>
 
     <form method="POST" action="{{ route('password.confirm') }}">
         @csrf
 
         <!-- Password -->
         <div class="mb-4">
-            <label for="password" class="form-label fw-semibold">{{ __('Kata Sandi') }}</label>
-            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+            <label for="password" class="form-label">Kata Sandi</label>
+            <div class="input-group">
+                <input id="password" type="password"
+                       class="form-control @error('password') is-invalid @enderror"
+                       name="password" placeholder="Masukkan kata sandi"
+                       required autocomplete="current-password">
+                <button class="btn btn-eye" type="button" id="togglePassword">
+                    <i class="fas fa-eye" id="togglePasswordIcon"></i>
+                </button>
+            </div>
             @error('password')
-                <div class="invalid-feedback">{{ $message }}</div>
+                <div class="text-danger small mt-1">{{ $message }}</div>
             @enderror
         </div>
 
-        <div class="d-grid mb-3">
-            <button type="submit" class="btn btn-primary fw-semibold py-2">
-                {{ __('Konfirmasi') }}
-            </button>
-        </div>
+        <button type="submit" class="btn btn-login">
+            <i class="fas fa-check-circle me-1"></i> Konfirmasi
+        </button>
     </form>
 </x-guest-layout>

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SuratKeluar extends Model
 {
@@ -11,6 +13,19 @@ class SuratKeluar extends Model
 
     protected $table = 'surat_keluar';
     protected $primaryKey = 'id_surat_keluar';
+
+    protected $casts = [
+        'tanggal_surat' => 'date',
+        'tanggal_kirim' => 'date',
+    ];
+
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'id_surat_keluar';
+    }
 
     protected $fillable = [
         'id_user',
@@ -22,7 +37,7 @@ class SuratKeluar extends Model
         'file_surat',
     ];
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'id_user');
     }
@@ -30,9 +45,9 @@ class SuratKeluar extends Model
     /**
      * Scope a query to search by nomer_surat or perihal.
      */
-    public function scopeSearch($query, $search)
+    public function scopeSearch(Builder $query, ?string $search): Builder
     {
-        return $query->when($search, function ($q) use ($search) {
+        return $query->when($search, function (Builder $q) use ($search) {
             $q->where('nomer_surat', 'like', "%{$search}%")
               ->orWhere('perihal', 'like', "%{$search}%");
         });
@@ -41,10 +56,10 @@ class SuratKeluar extends Model
     /**
      * Scope a query to filter by date range.
      */
-    public function scopeFilterByDate($query, $start_date, $end_date)
+    public function scopeFilterByDate(Builder $query, ?string $startDate, ?string $endDate): Builder
     {
-        return $query->when($start_date && $end_date, function ($q) use ($start_date, $end_date) {
-            $q->whereBetween('tanggal_surat', [$start_date, $end_date]);
+        return $query->when($startDate && $endDate, function (Builder $q) use ($startDate, $endDate) {
+            $q->whereBetween('tanggal_surat', [$startDate, $endDate]);
         });
     }
 }

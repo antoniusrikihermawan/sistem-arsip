@@ -48,8 +48,8 @@
                         <tr>
                             <td>{{ $loop->iteration + $suratMasuk->firstItem() - 1 }}</td>
                             <td>{{ $item->nomer_surat }}</td>
-                            <td>{{ \Carbon\Carbon::parse($item->tanggal_surat)->format('d F Y') }}</td>
-                            <td>{{ \Carbon\Carbon::parse($item->tanggal_terima)->format('d F Y') }}</td>
+                            <td>{{ $item->tanggal_surat->format('d F Y') }}</td>
+                            <td>{{ $item->tanggal_terima->format('d F Y') }}</td>
                             <td>{{ $item->pengirim }}</td>
                             <td>{{ $item->perihal }}</td>
                             <td>{{ $item->ditujukan }}</td>

@@ -28,11 +28,10 @@
             <i class="fas fa-user-cog mr-2"></i> Edit Profile
           </a>
           <div class="dropdown-divider"></div>
-          <form method="POST" action="{{ route('logout') }}">
+          <form method="POST" action="{{ route('logout') }}" id="logout-form">
             @csrf
-            <a href="{{ route('logout') }}" class="dropdown-item" 
-                onclick="event.preventDefault(); this.closest('form').submit();">
-              <i class="fas fa-sign-out-alt mr-2"></i> Log Out
+            <a href="{{ route('logout') }}" class="dropdown-item" onclick="confirmLogout(event)">
+              <i class="fas fa-sign-out-alt mr-2"></i> Logout
             </a>
           </form>
         </div>

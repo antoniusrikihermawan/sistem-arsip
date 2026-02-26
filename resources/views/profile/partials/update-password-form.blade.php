@@ -57,12 +57,8 @@
 
         <div class="d-flex align-items-center gap-3">
             <button class="btn btn-primary fw-semibold px-4">{{ __('Simpan') }}</button>
-
-            @if (session('status') === 'password-updated')
-                <span class="text-success small fw-semibold fade-out-message">
-                    <i class="bi bi-check-circle me-1"></i> {{ __('Tersimpan.') }}
-                </span>
-            @endif
         </div>
+
+
     </form>
 </section>

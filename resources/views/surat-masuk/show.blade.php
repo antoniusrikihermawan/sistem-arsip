@@ -16,11 +16,11 @@
                 </tr>
                 <tr>
                     <th>Tanggal Surat</th>
-                    <td>{{ \Carbon\Carbon::parse($surat_masuk->tanggal_surat)->format('d F Y') }}</td>
+                    <td>{{ $surat_masuk->tanggal_surat->format('d F Y') }}</td>
                 </tr>
                 <tr>
                     <th>Tanggal Terima</th>
-                    <td>{{ \Carbon\Carbon::parse($surat_masuk->tanggal_terima)->format('d F Y') }}</td>
+                    <td>{{ $surat_masuk->tanggal_terima->format('d F Y') }}</td>
                 </tr>
                 <tr>
                     <th>Pengirim</th>

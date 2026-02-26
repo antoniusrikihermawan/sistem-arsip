@@ -1,0 +1,249 @@
+/* ==========================================================
+   AUTH PAGES STYLESHEET
+   Styling untuk halaman login, register, forgot-password, dll.
+   ========================================================== */
+
+/* ── Variables ── */
+:root {
+    --primary: #4361ee;
+    --primary-hover: #3a56d4;
+    --accent: #3f37c9;
+    --bg-left: #ffffff;
+    --bg-right: #4361ee;
+    --text-heading: #1e293b;
+    --text-body: #64748b;
+    --input-border: #e2e8f0;
+    --input-focus: #4361ee;
+}
+
+/* ── Base ── */
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    margin: 0;
+    min-height: 100vh;
+}
+
+/* ── Layout ── */
+.auth-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+.auth-left {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: var(--bg-left);
+}
+
+.auth-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    background: linear-gradient(135deg, var(--bg-right) 0%, var(--accent) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+/* ── Form Container ── */
+.auth-form-container {
+    width: 100%;
+    max-width: 420px;
+}
+
+/* ── Brand ──*/
+.auth-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.auth-brand img {
+    height: 44px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.auth-brand-fallback {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.25rem;
+}
+
+.auth-brand-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-heading);
+    line-height: 1.2;
+}
+
+.auth-brand-text small {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--text-body);
+    margin-top: 2px;
+}
+
+/* ── Heading ── */
+.auth-heading {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-heading);
+    margin-bottom: 0.35rem;
+}
+
+.auth-subheading {
+    font-size: 1.05rem;
+    color: var(--text-body);
+    margin-bottom: 1.75rem;
+}
+
+/* ── Form Inputs ── */
+.auth-form-container .form-label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-heading);
+    margin-bottom: 0.4rem;
+}
+
+.auth-form-container .form-control {
+    border: 1.5px solid var(--input-border);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.auth-form-container .form-control:focus {
+    border-color: var(--input-focus);
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+}
+
+.auth-form-container .input-group .form-control {
+    border-right: none;
+}
+
+/* ── Eye Toggle Button ── */
+.auth-form-container .input-group .btn-eye {
+    background: #fff;
+    border: 1.5px solid var(--input-border);
+    border-left: none;
+    border-radius: 0 8px 8px 0;
+    color: var(--text-body);
+    padding: 0 0.75rem;
+    display: flex;
+    align-items: center;
+}
+
+.auth-form-container .input-group .btn-eye:hover {
+    color: var(--primary);
+}
+
+/* ── Submit Button ── */
+.btn-login {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    background: var(--primary);
+    color: #fff;
+    transition: background 0.2s, transform 0.15s;
+}
+
+.btn-login:hover {
+    background: var(--primary-hover);
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+.btn-login:active {
+    transform: translateY(0);
+}
+
+/* ── Footer Links ── */
+.auth-footer-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.auth-footer-link:hover {
+    text-decoration: underline;
+    color: var(--primary-hover);
+}
+
+/* ── Right Panel ── */
+.auth-right-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #fff;
+    max-width: 400px;
+}
+
+.auth-right-content h3 {
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.auth-right-content p {
+    font-weight: 300;
+    font-size: 0.95rem;
+    opacity: 0.9;
+    line-height: 1.6;
+}
+
+.auth-illustration svg {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    margin-bottom: 2rem;
+}
+
+/* Decorative circles */
+.auth-right::before,
+.auth-right::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.auth-right::before {
+    width: 350px;
+    height: 350px;
+    top: -100px;
+    right: -80px;
+}
+
+.auth-right::after {
+    width: 250px;
+    height: 250px;
+    bottom: -60px;
+    left: -60px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 991.98px) {
+    .auth-right { display: none; }
+    .auth-left  { min-height: 100vh; }
+}

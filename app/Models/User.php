@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -46,12 +46,12 @@ class User extends Authenticatable
         ];
     }
 
-    public function suratMasuk()
+    public function suratMasuk(): HasMany
     {
         return $this->hasMany(SuratMasuk::class, 'id_user');
     }
 
-    public function suratKeluar()
+    public function suratKeluar(): HasMany
     {
         return $this->hasMany(SuratKeluar::class, 'id_user');
     }

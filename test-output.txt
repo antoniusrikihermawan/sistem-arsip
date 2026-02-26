@@ -1,0 +1,78 @@
+﻿
+   PASS  Tests\Unit\ExampleTest
+  Γ£ô that truΓÇª 0.02s  
+
+   PASS  Tests\Feature\Auth\AuthenticationTest
+  Γ£ô login scΓÇª 0.67s  
+  Γ£ô users caΓÇª 0.14s  
+  Γ£ô users caΓÇª 0.24s  
+  Γ£ô users caΓÇª 0.02s  
+
+   PASS  Tests\Feature\Auth\EmailVerificationTest
+  Γ£ô email veΓÇª 0.06s  
+  Γ£ô email caΓÇª 0.03s  
+  Γ£ô email isΓÇª 0.03s  
+
+   PASS  Tests\Feature\Auth\PasswordConfirmationTest
+  Γ£ô confirmΓÇª  0.03s  
+  Γ£ô passwordΓÇª 0.02s  
+  Γ£ô passwordΓÇª 0.25s  
+
+   PASS  Tests\Feature\Auth\PasswordResetTest
+  Γ£ô reset paΓÇª 0.03s  
+  Γ£ô reset paΓÇª 0.23s  
+  Γ£ô reset paΓÇª 0.25s  
+  Γ£ô passwordΓÇª 0.29s  
+
+   PASS  Tests\Feature\Auth\PasswordUpdateTest
+  Γ£ô passwordΓÇª 0.04s  
+  Γ£ô correctΓÇª  0.02s  
+
+   FAIL  Tests\Feature\Auth\RegistrationTest
+  Γ¿» registraΓÇª 0.04s  
+  Γ¿» new userΓÇª 0.01s  
+
+   PASS  Tests\Feature\ExampleTest
+  Γ£ô it returΓÇª 0.02s  
+
+   PASS  Tests\Feature\ProfileTest
+  Γ£ô profileΓÇª  0.02s  
+  Γ£ô profileΓÇª  0.02s  
+  Γ£ô email veΓÇª 0.02s  
+  Γ£ô user canΓÇª 0.02s  
+  Γ£ô correctΓÇª  0.02s  
+  ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ  
+   FAILED  Tests</>ΓÇª   
+  Expected response status code [200] but received 404.
+Failed asserting that 404 is identical to 200.
+
+  at tests\Feature\Auth\RegistrationTest.php:6
+      2Γûò 
+      3Γûò test('registration screen can be rendered', function () {
+      4Γûò     $response = $this->get('/register');
+      5Γûò 
+  Γ₧£   6Γûò     $response->assertStatus(200);
+      7Γûò });
+      8Γûò 
+      9Γûò test('new users can register', function () {
+     10Γûò     $response = $this->post('/register', [
+
+  ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ  
+   FAILED  Tests</>ΓÇª   
+  The user is not authenticated
+Failed asserting that false is true.
+
+  at tests\Feature\Auth\RegistrationTest.php:17
+     13Γûò         'password' => 'password',
+     14Γûò         'password_confirmation' => 'password',
+     15Γûò     ]);
+     16Γûò 
+  Γ₧£  17Γûò     $this->assertAuthenticated();
+     18Γûò     $response->assertRedirect(route('dashboard', absolute: false));
+     19Γûò });
+     20Γûò
+
+
+  Tests:    2 failed, 23 passed (60 assertions)
+  Duration: 2.92s
+

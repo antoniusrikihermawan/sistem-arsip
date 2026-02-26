@@ -16,11 +16,11 @@
                 </tr>
                 <tr>
                     <th>Tanggal Surat</th>
-                    <td>{{ \Carbon\Carbon::parse($surat_keluar->tanggal_surat)->format('d F Y') }}</td>
+                    <td>{{ $surat_keluar->tanggal_surat->format('d F Y') }}</td>
                 </tr>
                 <tr>
                     <th>Tanggal Kirim</th>
-                    <td>{{ \Carbon\Carbon::parse($surat_keluar->tanggal_kirim)->format('d F Y') }}</td>
+                    <td>{{ $surat_keluar->tanggal_kirim->format('d F Y') }}</td>
                 </tr>
                 <tr>
                     <th>Perihal</th>

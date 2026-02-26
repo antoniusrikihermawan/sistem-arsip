@@ -8,7 +8,7 @@
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
   <!-- Theme style AdminLTE -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
   <!-- Custom Theme Styles -->
@@ -40,11 +40,11 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 class="m-0">@yield('title', 'Dashboard')</h1>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- /.content-header -->
+    <!-- content-header -->
 
     <!-- Main content -->
     <section class="content">
@@ -74,7 +74,7 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!-- Bootstrap 4 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
@@ -90,21 +90,37 @@
     @if(session('success'))
         Toast.fire({
             icon: 'success',
-            title: "{{ session('success') }}"
+            title: @js(session('success'))
         });
     @endif
 
-    @if(session('status'))
+    @if(session('status') === 'password-updated')
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: 'Kata sandi Anda telah berhasil diperbarui.',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+        });
+    @elseif(session('status') === 'profile-updated')
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: 'Informasi profil Anda telah berhasil diperbarui.',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+        });
+    @elseif(session('status'))
         Toast.fire({
             icon: 'success',
-            title: "{{ session('status') }}"
+            title: @js(session('status'))
         });
     @endif
 
     @if(session('error'))
         Toast.fire({
             icon: 'error',
-            title: "{{ session('error') }}"
+            title: @js(session('error'))
         });
     @endif
 </script>
