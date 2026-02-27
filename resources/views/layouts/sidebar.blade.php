@@ -41,6 +41,13 @@
             </a>
           </li>
 
+          <li class="nav-item">
+            <a href="{{ route('laporan.index') }}" class="nav-link {{ request()->routeIs('laporan.*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-file-alt"></i>
+              <p>Laporan</p>
+            </a>
+          </li>
+
           <li class="nav-header">PENGATURAN</li>
           
           <li class="nav-item">
